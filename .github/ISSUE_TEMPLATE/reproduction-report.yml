@@ -1,0 +1,85 @@
+{
+  "name": "Public reproduction report",
+  "description": "Return a PASS, FAIL, or CONFUSED result from a clean public clone.",
+  "title": "[Reproduction]: ",
+  "labels": ["reproduction"],
+  "body": [
+    {
+      "type": "markdown",
+      "attributes": {
+        "value": "Thank you for testing the public prototype. A completed report records what happened on your machine. It does not establish security, compliance, production readiness, deployment readiness, customer validation, or broad platform support. A report from someone who constructed or reviewed this candidate is useful internal reproduction, but it is not independent outsider evidence."
+      }
+    },
+    {
+      "type": "dropdown",
+      "id": "result",
+      "attributes": {"label": "Result", "options": ["PASS", "FAIL", "CONFUSED"]},
+      "validations": {"required": true}
+    },
+    {
+      "type": "textarea",
+      "id": "environment",
+      "attributes": {"label": "Environment", "description": "OS, CPU architecture, Python implementation, and Python version."},
+      "validations": {"required": true}
+    },
+    {
+      "type": "input",
+      "id": "commit",
+      "attributes": {"label": "Exact commit", "placeholder": "git rev-parse HEAD"},
+      "validations": {"required": true}
+    },
+    {
+      "type": "textarea",
+      "id": "commands",
+      "attributes": {"label": "Commands run", "description": "Paste the exact commands, including the clone command."},
+      "validations": {"required": true}
+    },
+    {
+      "type": "textarea",
+      "id": "output",
+      "attributes": {"label": "Observed output", "description": "Paste the relevant unedited terminal output or attach it."},
+      "validations": {"required": true}
+    },
+    {
+      "type": "input",
+      "id": "replay_identity",
+      "attributes": {"label": "Replay identity", "placeholder": "sha256:..."},
+      "validations": {"required": true}
+    },
+    {
+      "type": "input",
+      "id": "canonical_bytes",
+      "attributes": {"label": "Canonical replay bytes", "placeholder": "25194"},
+      "validations": {"required": true}
+    },
+    {
+      "type": "textarea",
+      "id": "friction",
+      "attributes": {"label": "Dependencies or friction", "description": "What did you need beyond the stated requirements? What was unclear?"},
+      "validations": {"required": true}
+    },
+    {
+      "type": "textarea",
+      "id": "cap_meaning",
+      "attributes": {"label": "What did CAP mean to you?", "description": "Explain in your own words what CAP checked and did not authorize."},
+      "validations": {"required": true}
+    },
+    {
+      "type": "textarea",
+      "id": "pass_meaning",
+      "attributes": {"label": "What did PASS mean to you?", "description": "Explain what the demonstrated PASS proves and what it does not prove."},
+      "validations": {"required": true}
+    },
+    {
+      "type": "dropdown",
+      "id": "relationship",
+      "attributes": {"label": "Relationship to this candidate", "options": ["I did not construct or review it", "I constructed or reviewed it", "Prefer not to say"]},
+      "validations": {"required": true}
+    },
+    {
+      "type": "checkboxes",
+      "id": "accuracy",
+      "attributes": {"label": "Accuracy check", "options": [{"label": "I have reported the commands and results as observed.", "required": true}]}
+    }
+  ]
+}

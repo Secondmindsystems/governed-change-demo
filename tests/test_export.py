@@ -20,6 +20,9 @@ class ExportTests(unittest.TestCase):
             "docs/ARCHITECTURE.md",
             "docs/FIVE_MINUTE_DEMO.md",
             "docs/REPRODUCTION.md",
+            "docs/OUTSIDER_REPRODUCTION.md",
+            "docs/ADVERSARIAL_TEST_PACK.md",
+            "docs/PUBLIC_VALIDATION_CAMPAIGN_STATE.md",
             "docs/AUTHORSHIP_AND_AI_DISCLOSURE.md",
             "docs/VERIFIED_METRICS.md",
             "docs/LIMITATIONS.md",
@@ -29,6 +32,37 @@ class ExportTests(unittest.TestCase):
             set(),
             {relative for relative in required if not (ROOT / relative).is_file()},
         )
+
+    def test_public_reproduction_issue_form_is_structured_and_claim_safe(self) -> None:
+        path = ROOT / ".github" / "ISSUE_TEMPLATE" / "reproduction-report.yml"
+        form = json.loads(path.read_text(encoding="utf-8"))
+        self.assertEqual("Public reproduction report", form["name"])
+        ids = {item.get("id") for item in form["body"]}
+        self.assertTrue(
+            {
+                "result",
+                "environment",
+                "commit",
+                "commands",
+                "output",
+                "replay_identity",
+                "canonical_bytes",
+                "cap_meaning",
+                "pass_meaning",
+                "relationship",
+            }.issubset(ids)
+        )
+        text = json.dumps(form)
+        self.assertIn("not independent outsider evidence", text)
+        self.assertIn("does not establish", text)
+
+    def test_adversarial_pack_runner_names_only_existing_tests(self) -> None:
+        runner = (ROOT / "tools" / "run_adversarial_pack.py").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("unittest.defaultTestLoader.loadTestsFromNames", runner)
+        self.assertIn("test_02_stale_basis_is_cap_and_combined_hold", runner)
+        self.assertIn("test_15_gate_order_is_materially_invariant_after_cap_pass", runner)
 
     def test_required_authorship_disclosure_is_preserved(self) -> None:
         text = (ROOT / "docs" / "AUTHORSHIP_AND_AI_DISCLOSURE.md").read_text(
