@@ -1,0 +1,84 @@
+{
+  "applicable_gates": [
+    {
+      "gate_id": "path_gate",
+      "required": true
+    },
+    {
+      "gate_id": "claims_gate",
+      "required": true
+    }
+  ],
+  "contract_version": "governed-repo.authority-manifest/v1",
+  "expires_at": "2026-12-31T23:59:59Z",
+  "issued_at": "2026-07-01T00:00:00Z",
+  "issuer": {
+    "actor_id": "demo-operator",
+    "actor_type": "OPERATOR"
+  },
+  "manifest_id": "authority-flagship-change-001",
+  "no_touch_paths": [
+    "runtime",
+    "secrets"
+  ],
+  "permitted_actions": [
+    "CREATE",
+    "UPDATE"
+  ],
+  "permitted_task_ids": [
+    "flagship-cap-block-task-001",
+    "flagship-context-update-task-001",
+    "flagship-demo-task-001"
+  ],
+  "permitted_paths": [
+    {
+      "actions": [
+        "CREATE",
+        "UPDATE"
+      ],
+      "allow_protected": false,
+      "match": "SUBTREE",
+      "path": "config",
+      "rule_id": "config-declared-but-policy-gated"
+    },
+    {
+      "actions": [
+        "CREATE",
+        "UPDATE"
+      ],
+      "allow_protected": false,
+      "match": "SUBTREE",
+      "path": "docs/public",
+      "rule_id": "public-docs-only"
+    }
+  ],
+  "policy_hashes": {
+    "cap_policy": "sha256:32537c05c37be5a419790b4576edb9901b3ae1418f5693c75c1a01c8ef86f6b3",
+    "claims_gate": "sha256:d7210ff1bd1244bff5620cded67e041105389089bb6e1184774204b583f33098",
+    "path_gate": "sha256:cc3e424331e5eff147dc5192ee97a2907533f953eb029c41fde5f8d569a0cfeb"
+  },
+  "policy_versions": {
+    "cap_policy": "governed-repo.cap-policy/v1.0.0",
+    "claims_gate": "governed-repo.claims-policy/v1.0.0",
+    "path_gate": "governed-repo.path-policy/v1.0.0"
+  },
+  "receipt_requirements": {
+    "canonical_hash": true,
+    "preserve_gate_evidence": true,
+    "repair_lineage": true
+  },
+  "required_source_basis": {
+    "basis_hash": "sha256:7b4acd7e049e6460494f5e8e5e87b27080c0b708ca10ba6058ea593d99f6bc48",
+    "basis_id": "neutral-fixture-repository-base"
+  },
+  "revocation_status": "NOT_REVOKED",
+  "state": "ACTIVE",
+  "stop_conditions": [
+    "block on any required gate BLOCK",
+    "hold on an explicitly unresolved authority or evidence state",
+    "do not execute repository writes"
+  ],
+  "subject_actor_ids": [
+    "ai-agent-demo"
+  ]
+}

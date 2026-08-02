@@ -1,0 +1,1 @@
+"""Product-local test suite."""

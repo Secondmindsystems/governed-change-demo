@@ -1,0 +1,383 @@
+{
+  "$id": "https://schemas.example.org/governed-change-demo/governed-receipt.v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "cap_record": {
+            "properties": {
+              "decision_ref": {
+                "properties": {
+                  "decision": {
+                    "enum": [
+                      "BLOCK",
+                      "HOLD:CONTEXT_UPDATE_REQUIRED"
+                    ]
+                  }
+                },
+                "required": [
+                  "decision"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "decision_ref"
+            ]
+          }
+        },
+        "required": [
+          "cap_record"
+        ]
+      },
+      "then": {
+        "properties": {
+          "gate_results": {
+            "items": {
+              "properties": {
+                "reason_codes": {
+                  "items": false,
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "prefixItems": [
+                    {
+                      "const": "CAP_NOT_PASSED"
+                    }
+                  ]
+                },
+                "status": {
+                  "const": "NOT_EVALUATED"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "capReference": {
+      "additionalProperties": false,
+      "properties": {
+        "canonical_hash": {
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "cap_decision_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "decision": {
+          "enum": [
+            "PASS",
+            "BLOCK",
+            "HOLD:CONTEXT_UPDATE_REQUIRED"
+          ]
+        },
+        "domain_gates_may_run": {
+          "type": "boolean"
+        },
+        "execution_authority": {
+          "const": false
+        }
+      },
+      "required": [
+        "cap_decision_id",
+        "canonical_hash",
+        "decision",
+        "domain_gates_may_run",
+        "execution_authority"
+      ],
+      "type": "object"
+    },
+    "hash": {
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "type": "string"
+    }
+  },
+  "properties": {
+    "cap_decision": {
+      "anyOf": [
+        {
+          "$ref": "cap-decision.v1.schema.json"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "cap_record": {
+      "additionalProperties": false,
+      "properties": {
+        "decision_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/capReference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "domain_gates_executed": {
+          "type": "boolean"
+        },
+        "execution_authority": {
+          "const": false
+        },
+        "input_hash": {
+          "$ref": "#/definitions/hash"
+        },
+        "input_status": {
+          "enum": [
+            "VALID",
+            "INVALID",
+            "MISSING"
+          ]
+        }
+      },
+      "required": [
+        "input_status",
+        "input_hash",
+        "decision_ref",
+        "domain_gates_executed",
+        "execution_authority"
+      ],
+      "type": "object"
+    },
+    "change_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "claim_boundaries": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "contract_version": {
+      "const": "governed-repo.governed-receipt/v1"
+    },
+    "decision": {
+      "$ref": "combined-decision.v1.schema.json"
+    },
+    "gate_results": {
+      "allOf": [
+        {
+          "contains": {
+            "properties": {
+              "gate_id": {
+                "const": "claims_gate"
+              }
+            },
+            "required": [
+              "gate_id"
+            ]
+          },
+          "maxContains": 1,
+          "minContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "gate_id": {
+                "const": "path_gate"
+              }
+            },
+            "required": [
+              "gate_id"
+            ]
+          },
+          "maxContains": 1,
+          "minContains": 1
+        }
+      ],
+      "items": {
+        "$ref": "gate-result.v1.schema.json"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    },
+    "input_hashes": {
+      "additionalProperties": false,
+      "properties": {
+        "authority_manifest": {
+          "$ref": "#/definitions/hash"
+        },
+        "cap_decision": {
+          "$ref": "#/definitions/hash"
+        },
+        "cap_policy": {
+          "$ref": "#/definitions/hash"
+        },
+        "shared_change_envelope": {
+          "$ref": "#/definitions/hash"
+        }
+      },
+      "required": [
+        "shared_change_envelope",
+        "authority_manifest",
+        "cap_decision",
+        "cap_policy"
+      ],
+      "type": "object"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "next_lawful_move": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "policy_hashes": {
+      "additionalProperties": false,
+      "properties": {
+        "cap_policy": {
+          "$ref": "#/definitions/hash"
+        },
+        "claims_gate": {
+          "$ref": "#/definitions/hash"
+        },
+        "path_gate": {
+          "$ref": "#/definitions/hash"
+        }
+      },
+      "required": [
+        "cap_policy",
+        "path_gate",
+        "claims_gate"
+      ],
+      "type": "object"
+    },
+    "receipt_hash": {
+      "$ref": "#/definitions/hash"
+    },
+    "receipt_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "repair_lineage": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "cap_rechecked": {
+              "const": true
+            },
+            "changed_input_hashes": {
+              "additionalProperties": false,
+              "properties": {
+                "current_cap_decision": {
+                  "$ref": "#/definitions/hash"
+                },
+                "current_shared_change_envelope": {
+                  "$ref": "#/definitions/hash"
+                },
+                "prior_cap_decision": {
+                  "$ref": "#/definitions/hash"
+                },
+                "prior_shared_change_envelope": {
+                  "$ref": "#/definitions/hash"
+                }
+              },
+              "required": [
+                "prior_shared_change_envelope",
+                "current_shared_change_envelope",
+                "prior_cap_decision",
+                "current_cap_decision"
+              ],
+              "type": "object"
+            },
+            "prior_receipt_hash": {
+              "$ref": "#/definitions/hash"
+            },
+            "prior_receipt_id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "prior_revision": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "relationship": {
+              "const": "BOUNDED_REPAIR_OF"
+            },
+            "unchanged_policy_hashes": {
+              "additionalProperties": false,
+              "properties": {
+                "cap_policy": {
+                  "$ref": "#/definitions/hash"
+                },
+                "claims_gate": {
+                  "$ref": "#/definitions/hash"
+                },
+                "path_gate": {
+                  "$ref": "#/definitions/hash"
+                }
+              },
+              "required": [
+                "cap_policy",
+                "claims_gate",
+                "path_gate"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "relationship",
+            "prior_receipt_id",
+            "prior_receipt_hash",
+            "prior_revision",
+            "cap_rechecked",
+            "changed_input_hashes",
+            "unchanged_policy_hashes"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "repair_summary": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "revision": {
+      "minimum": 0,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "contract_version",
+    "receipt_id",
+    "receipt_hash",
+    "change_id",
+    "revision",
+    "decision",
+    "cap_decision",
+    "cap_record",
+    "input_hashes",
+    "policy_hashes",
+    "gate_results",
+    "limitations",
+    "claim_boundaries",
+    "next_lawful_move",
+    "repair_summary",
+    "repair_lineage"
+  ],
+  "title": "Governed Receipt v1",
+  "type": "object"
+}

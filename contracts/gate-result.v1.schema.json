@@ -1,0 +1,138 @@
+{
+  "$id": "https://schemas.example.org/governed-change-demo/gate-result.v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "NOT_EVALUATED"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "applicable": {
+            "const": true
+          },
+          "reason_codes": {
+            "items": false,
+            "maxItems": 1,
+            "minItems": 1,
+            "prefixItems": [
+              {
+                "const": "CAP_NOT_PASSED"
+              }
+            ]
+          },
+          "required": {
+            "const": true
+          }
+        }
+      }
+    }
+  ],
+  "properties": {
+    "adapter_version": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "applicable": {
+      "type": "boolean"
+    },
+    "change_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "contract_version": {
+      "const": "governed-repo.gate-result/v1"
+    },
+    "evidence": {
+      "description": "Gate-specific evidence remains heterogeneous by design.",
+      "type": "object"
+    },
+    "gate_id": {
+      "enum": [
+        "path_gate",
+        "claims_gate"
+      ]
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "policy_hash": {
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "policy_version": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "reason_codes": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "repair_actions": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "required": {
+      "type": "boolean"
+    },
+    "result_hash": {
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "result_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "revision": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "status": {
+      "enum": [
+        "PASS",
+        "BLOCK",
+        "HOLD",
+        "NOT_EVALUATED"
+      ]
+    }
+  },
+  "required": [
+    "contract_version",
+    "result_id",
+    "result_hash",
+    "gate_id",
+    "adapter_version",
+    "policy_version",
+    "policy_hash",
+    "change_id",
+    "revision",
+    "applicable",
+    "required",
+    "status",
+    "reason_codes",
+    "evidence",
+    "limitations",
+    "repair_actions"
+  ],
+  "title": "Gate Result v1",
+  "type": "object"
+}

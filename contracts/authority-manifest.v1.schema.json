@@ -1,0 +1,342 @@
+{
+  "$id": "https://schemas.example.org/governed-change-demo/authority-manifest.v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "ACTIVE"
+          }
+        },
+        "required": [
+          "state"
+        ]
+      },
+      "then": {
+        "properties": {
+          "revocation_status": {
+            "const": "NOT_REVOKED"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "PENDING_REVIEW"
+          }
+        },
+        "required": [
+          "state"
+        ]
+      },
+      "then": {
+        "properties": {
+          "revocation_status": {
+            "const": "UNKNOWN"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "REVOKED"
+          }
+        },
+        "required": [
+          "state"
+        ]
+      },
+      "then": {
+        "properties": {
+          "revocation_status": {
+            "const": "REVOKED"
+          }
+        }
+      }
+    }
+  ],
+  "properties": {
+    "applicable_gates": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "gate_id": {
+            "enum": [
+              "path_gate",
+              "claims_gate"
+            ]
+          },
+          "required": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "gate_id",
+          "required"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "contract_version": {
+      "const": "governed-repo.authority-manifest/v1"
+    },
+    "expires_at": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:[.][0-9]+)?Z$",
+      "type": "string"
+    },
+    "issued_at": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:[.][0-9]+)?Z$",
+      "type": "string"
+    },
+    "issuer": {
+      "additionalProperties": false,
+      "properties": {
+        "actor_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "actor_type": {
+          "enum": [
+            "OPERATOR",
+            "ORGANIZATION"
+          ]
+        }
+      },
+      "required": [
+        "actor_id",
+        "actor_type"
+      ],
+      "type": "object"
+    },
+    "manifest_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "no_touch_paths": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "permitted_actions": {
+      "items": {
+        "enum": [
+          "CREATE",
+          "UPDATE",
+          "DELETE",
+          "RENAME"
+        ]
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "permitted_task_ids": {
+      "items": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]{0,127}$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "permitted_paths": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "actions": {
+            "items": {
+              "enum": [
+                "CREATE",
+                "UPDATE",
+                "DELETE",
+                "RENAME"
+              ]
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "allow_protected": {
+            "type": "boolean"
+          },
+          "match": {
+            "enum": [
+              "EXACT",
+              "SUBTREE"
+            ]
+          },
+          "path": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "rule_id": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "rule_id",
+          "path",
+          "match",
+          "actions",
+          "allow_protected"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "policy_versions": {
+      "additionalProperties": false,
+      "properties": {
+        "cap_policy": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "claims_gate": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "path_gate": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "cap_policy",
+        "path_gate",
+        "claims_gate"
+      ],
+      "type": "object"
+    },
+    "policy_hashes": {
+      "additionalProperties": false,
+      "properties": {
+        "cap_policy": {
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "claims_gate": {
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "path_gate": {
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "cap_policy",
+        "path_gate",
+        "claims_gate"
+      ],
+      "type": "object"
+    },
+    "required_source_basis": {
+      "additionalProperties": false,
+      "properties": {
+        "basis_hash": {
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "basis_id": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "basis_id",
+        "basis_hash"
+      ],
+      "type": "object"
+    },
+    "revocation_status": {
+      "enum": [
+        "NOT_REVOKED",
+        "REVOKED",
+        "UNKNOWN"
+      ]
+    },
+    "receipt_requirements": {
+      "additionalProperties": false,
+      "properties": {
+        "canonical_hash": {
+          "type": "boolean"
+        },
+        "preserve_gate_evidence": {
+          "type": "boolean"
+        },
+        "repair_lineage": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "canonical_hash",
+        "repair_lineage",
+        "preserve_gate_evidence"
+      ],
+      "type": "object"
+    },
+    "state": {
+      "enum": [
+        "ACTIVE",
+        "PENDING_REVIEW",
+        "REVOKED"
+      ]
+    },
+    "stop_conditions": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "subject_actor_ids": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "contract_version",
+    "manifest_id",
+    "issuer",
+    "subject_actor_ids",
+    "state",
+    "revocation_status",
+    "issued_at",
+    "expires_at",
+    "required_source_basis",
+    "permitted_task_ids",
+    "permitted_paths",
+    "no_touch_paths",
+    "permitted_actions",
+    "applicable_gates",
+    "stop_conditions",
+    "policy_versions",
+    "policy_hashes",
+    "receipt_requirements"
+  ],
+  "title": "Authority Manifest v1",
+  "type": "object"
+}

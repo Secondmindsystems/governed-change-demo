@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "governed-change-demo"
+version = "0.1.0"
+description = "A deterministic, public-safe two-gate repository change prototype."
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+governed-change-demo = "governed_change_demo.cli:main"
+
+[tool.setuptools]
+packages = ["governed_change_demo"]

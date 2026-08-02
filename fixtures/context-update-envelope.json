@@ -1,0 +1,79 @@
+{
+  "actor": {
+    "actor_id": "ai-agent-demo",
+    "actor_type": "AI_AGENT"
+  },
+  "assumptions_to_validate": [
+    "The declared source basis is current for this evaluation.",
+    "The authority manifest applies to this actor, task, and requested action."
+  ],
+  "authority_ref": "authority-flagship-change-001",
+  "change_id": "flagship-context-update-001",
+  "changes": [
+    {
+      "after_content_hash": "sha256:0b1217a4d4a9cab4eb90cfd1330f36a9cfa38ced8dd9f8644ccd08933008a94e",
+      "before_content_hash": null,
+      "claims": [
+        {
+          "caveats": [
+            "This does not establish security, compliance, production readiness, deployment readiness, or customer validation."
+          ],
+          "claim_id": "claim-context-update-001",
+          "claim_kind": "DESCRIPTIVE",
+          "claim_tag": "PROTOTYPE_BEHAVIOR",
+          "evidence_refs": [
+            "evidence-context-update-001"
+          ],
+          "statement": "This fixed fixture carries a deliberately stale declared repository source basis."
+        }
+      ],
+      "content": "# Context update fixture\n\nThis fixed fixture carries a deliberately stale declared repository source basis.\n",
+      "content_encoding": "utf-8",
+      "destination_path": null,
+      "operation": "CREATE",
+      "path": "docs/public/context-update-required.md"
+    }
+  ],
+  "contract_version": "governed-repo.shared-change-envelope/v1",
+  "evaluation_as_of": "2026-07-29T12:05:00Z",
+  "evidence": [
+    {
+      "availability": "AVAILABLE",
+      "evidence_class": "SOURCE_OBSERVATION",
+      "evidence_id": "evidence-context-update-001",
+      "evidence_state": "SUPPORTED",
+      "source_ref": "fixture://context-update/revision-1",
+      "summary": "The deliberately stale declared source-basis hash is inspectable in this fixed fixture."
+    }
+  ],
+  "evidence_requirements": [
+    "CAP source and authority alignment evidence",
+    "canonical combined receipt"
+  ],
+  "fixture": {
+    "fixture_id": "modeled-context-update-required",
+    "fixture_version": "1.0.0",
+    "state": "ORIGINAL_BLOCK"
+  },
+  "policy_hashes": {
+    "cap_policy": "sha256:32537c05c37be5a419790b4576edb9901b3ae1418f5693c75c1a01c8ef86f6b3",
+    "claims_gate": "sha256:d7210ff1bd1244bff5620cded67e041105389089bb6e1184774204b583f33098",
+    "path_gate": "sha256:cc3e424331e5eff147dc5192ee97a2907533f953eb029c41fde5f8d569a0cfeb"
+  },
+  "policy_versions": {
+    "cap_policy": "governed-repo.cap-policy/v1.0.0",
+    "claims_gate": "governed-repo.claims-policy/v1.0.0",
+    "path_gate": "governed-repo.path-policy/v1.0.0"
+  },
+  "requested_at": "2026-07-29T12:00:00Z",
+  "repair_summary": null,
+  "revision": 1,
+  "source_basis": {
+    "basis_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "basis_id": "neutral-fixture-repository-base"
+  },
+  "task": {
+    "summary": "Prove that stale source basis requires an explicit context update.",
+    "task_id": "flagship-context-update-task-001"
+  }
+}

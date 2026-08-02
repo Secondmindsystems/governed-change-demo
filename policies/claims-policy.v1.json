@@ -1,0 +1,52 @@
+{
+  "allowed_claim_tags": [
+    "LIMITATION",
+    "PROCESS_DESCRIPTION",
+    "PROTOTYPE_BEHAVIOR"
+  ],
+  "claim_kind_evidence_classes": {
+    "ACTION_EVIDENCE": [
+      "ACTION_EVENT"
+    ],
+    "COMMERCIAL_PREFERENCE": [
+      "PREFERENCE"
+    ],
+    "DESCRIPTIVE": [
+      "SOURCE_OBSERVATION"
+    ],
+    "DIAGNOSTIC_HYPOTHESIS": [
+      "DIAGNOSTIC_INFERENCE"
+    ],
+    "OUTCOME_SUPPORTED": [
+      "OUTCOME_MEASUREMENT"
+    ]
+  },
+  "contract_version": "governed-repo.claims-policy/v1",
+  "effective_from": "2026-01-01T00:00:00Z",
+  "expires_at": "2027-01-01T00:00:00Z",
+  "explicit_hold_evidence_states": [
+    "CONFOUNDED",
+    "INCONCLUSIVE"
+  ],
+  "policy_hash": "sha256:d7210ff1bd1244bff5620cded67e041105389089bb6e1184774204b583f33098",
+  "policy_id": "flagship-public-claims-policy",
+  "policy_version": "governed-repo.claims-policy/v1.0.0",
+  "prohibited_claim_tags": [
+    "COMPLIANCE",
+    "CUSTOMER_VALIDATION",
+    "DEPLOYMENT_READINESS",
+    "MARKET_DEMAND",
+    "PRODUCT_VALIDATION",
+    "PRODUCTION_READINESS",
+    "RUNTIME_QUALIFICATION",
+    "SECURITY",
+    "SUPERIORITY"
+  ],
+  "required_caveats_by_tag": {
+    "LIMITATION": [],
+    "PROCESS_DESCRIPTION": [],
+    "PROTOTYPE_BEHAVIOR": [
+      "This does not establish security, compliance, production readiness, deployment readiness, or customer validation."
+    ]
+  }
+}

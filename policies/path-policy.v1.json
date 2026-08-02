@@ -1,0 +1,36 @@
+{
+  "case_mode": "SENSITIVE",
+  "contract_version": "governed-repo.path-policy/v1",
+  "effective_from": "2026-01-01T00:00:00Z",
+  "expires_at": "2027-01-01T00:00:00Z",
+  "path_form": "REPO_RELATIVE_POSIX",
+  "policy_hash": "sha256:cc3e424331e5eff147dc5192ee97a2907533f953eb029c41fde5f8d569a0cfeb",
+  "policy_id": "flagship-public-path-policy",
+  "policy_version": "governed-repo.path-policy/v1.0.0",
+  "protected_rules": [
+    {
+      "match": "SUBTREE",
+      "path": ".github",
+      "rule_id": "protected-workflows"
+    },
+    {
+      "match": "SUBTREE",
+      "path": "config",
+      "rule_id": "protected-config"
+    },
+    {
+      "match": "SUBTREE",
+      "path": "runtime",
+      "rule_id": "protected-runtime"
+    },
+    {
+      "match": "SUBTREE",
+      "path": "secrets",
+      "rule_id": "protected-secrets"
+    }
+  ],
+  "rename_semantics": "EVALUATE_BOTH_ENDPOINTS",
+  "self_protected_paths": [
+    "governance/policies"
+  ]
+}

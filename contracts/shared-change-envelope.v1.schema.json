@@ -1,0 +1,483 @@
+{
+  "$id": "https://schemas.example.org/governed-change-demo/shared-change-envelope.v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "actor": {
+      "additionalProperties": false,
+      "properties": {
+        "actor_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "actor_type": {
+          "enum": [
+            "HUMAN",
+            "AI_AGENT",
+            "AUTOMATION"
+          ]
+        }
+      },
+      "required": [
+        "actor_id",
+        "actor_type"
+      ],
+      "type": "object"
+    },
+    "assumptions_to_validate": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "authority_ref": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "change_id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]{2,95}$",
+      "type": "string"
+    },
+    "changes": {
+      "items": {
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation": {
+                  "const": "CREATE"
+                }
+              },
+              "required": [
+                "operation"
+              ]
+            },
+            "then": {
+              "properties": {
+                "after_content_hash": {
+                  "pattern": "^sha256:[a-f0-9]{64}$",
+                  "type": "string"
+                },
+                "before_content_hash": {
+                  "type": "null"
+                },
+                "destination_path": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "operation": {
+                  "const": "UPDATE"
+                }
+              },
+              "required": [
+                "operation"
+              ]
+            },
+            "then": {
+              "properties": {
+                "after_content_hash": {
+                  "pattern": "^sha256:[a-f0-9]{64}$",
+                  "type": "string"
+                },
+                "before_content_hash": {
+                  "pattern": "^sha256:[a-f0-9]{64}$",
+                  "type": "string"
+                },
+                "destination_path": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "operation": {
+                  "const": "DELETE"
+                }
+              },
+              "required": [
+                "operation"
+              ]
+            },
+            "then": {
+              "properties": {
+                "after_content_hash": {
+                  "type": "null"
+                },
+                "before_content_hash": {
+                  "pattern": "^sha256:[a-f0-9]{64}$",
+                  "type": "string"
+                },
+                "content": {
+                  "const": ""
+                },
+                "destination_path": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "operation": {
+                  "const": "RENAME"
+                }
+              },
+              "required": [
+                "operation"
+              ]
+            },
+            "then": {
+              "properties": {
+                "after_content_hash": {
+                  "pattern": "^sha256:[a-f0-9]{64}$",
+                  "type": "string"
+                },
+                "before_content_hash": {
+                  "pattern": "^sha256:[a-f0-9]{64}$",
+                  "type": "string"
+                },
+                "destination_path": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "properties": {
+          "after_content_hash": {
+            "pattern": "^sha256:[a-f0-9]{64}$",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "before_content_hash": {
+            "pattern": "^sha256:[a-f0-9]{64}$",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "claims": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "caveats": {
+                  "items": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "claim_id": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "claim_kind": {
+                  "enum": [
+                    "DESCRIPTIVE",
+                    "DIAGNOSTIC_HYPOTHESIS",
+                    "COMMERCIAL_PREFERENCE",
+                    "ACTION_EVIDENCE",
+                    "OUTCOME_SUPPORTED"
+                  ]
+                },
+                "claim_tag": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "evidence_refs": {
+                  "items": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "statement": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "claim_id",
+                "statement",
+                "claim_kind",
+                "claim_tag",
+                "evidence_refs",
+                "caveats"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "content": {
+            "type": "string"
+          },
+          "content_encoding": {
+            "const": "utf-8"
+          },
+          "destination_path": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "operation": {
+            "enum": [
+              "CREATE",
+              "UPDATE",
+              "DELETE",
+              "RENAME"
+            ]
+          },
+          "path": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "operation",
+          "path",
+          "destination_path",
+          "content",
+          "content_encoding",
+          "before_content_hash",
+          "after_content_hash",
+          "claims"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "contract_version": {
+      "const": "governed-repo.shared-change-envelope/v1"
+    },
+    "evidence": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "availability": {
+            "enum": [
+              "AVAILABLE",
+              "REFRESHABLE_UNAVAILABLE"
+            ]
+          },
+          "evidence_class": {
+            "enum": [
+              "SOURCE_OBSERVATION",
+              "DIAGNOSTIC_INFERENCE",
+              "PREFERENCE",
+              "ACTION_EVENT",
+              "OUTCOME_MEASUREMENT"
+            ]
+          },
+          "evidence_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "evidence_state": {
+            "enum": [
+              "SUPPORTED",
+              "PARTIALLY_SUPPORTED",
+              "REFUTED",
+              "INCONCLUSIVE",
+              "CONFOUNDED"
+            ]
+          },
+          "source_ref": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "summary": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "availability",
+          "evidence_id",
+          "evidence_class",
+          "evidence_state",
+          "summary",
+          "source_ref"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "evidence_requirements": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "evaluation_as_of": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:[.][0-9]+)?Z$",
+      "type": "string"
+    },
+    "fixture": {
+      "additionalProperties": false,
+      "properties": {
+        "fixture_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "fixture_version": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "ORIGINAL_BLOCK",
+            "BOUNDED_REPAIR",
+            "MODELED_HOLD"
+          ]
+        }
+      },
+      "required": [
+        "fixture_id",
+        "fixture_version",
+        "state"
+      ],
+      "type": "object"
+    },
+    "policy_versions": {
+      "additionalProperties": false,
+      "properties": {
+        "cap_policy": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "claims_gate": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "path_gate": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "cap_policy",
+        "path_gate",
+        "claims_gate"
+      ],
+      "type": "object"
+    },
+    "policy_hashes": {
+      "additionalProperties": false,
+      "properties": {
+        "cap_policy": {
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "claims_gate": {
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "path_gate": {
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "cap_policy",
+        "path_gate",
+        "claims_gate"
+      ],
+      "type": "object"
+    },
+    "repair_summary": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "requested_at": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:[.][0-9]+)?Z$",
+      "type": "string"
+    },
+    "source_basis": {
+      "additionalProperties": false,
+      "properties": {
+        "basis_hash": {
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "basis_id": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "basis_id",
+        "basis_hash"
+      ],
+      "type": "object"
+    },
+    "revision": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "task": {
+      "additionalProperties": false,
+      "properties": {
+        "summary": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "task_id": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "task_id",
+        "summary"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "contract_version",
+    "change_id",
+    "revision",
+    "actor",
+    "task",
+    "assumptions_to_validate",
+    "authority_ref",
+    "requested_at",
+    "evaluation_as_of",
+    "source_basis",
+    "repair_summary",
+    "changes",
+    "evidence",
+    "policy_versions",
+    "policy_hashes",
+    "fixture",
+    "evidence_requirements"
+  ],
+  "title": "Shared Change Envelope v1",
+  "type": "object"
+}

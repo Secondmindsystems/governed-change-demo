@@ -1,0 +1,80 @@
+{
+  "actor": {
+    "actor_id": "ai-agent-demo",
+    "actor_type": "AI_AGENT"
+  },
+  "assumptions_to_validate": [
+    "The declared source basis is current for this evaluation.",
+    "The authority manifest applies to this actor, task, and requested action."
+  ],
+  "authority_ref": "authority-flagship-hold-001",
+  "change_id": "flagship-hold-001",
+  "changes": [
+    {
+      "after_content_hash": "sha256:13b1b2b1fa7510483454b5265ac1f6023629b927d73538023e983e6b93262c76",
+      "before_content_hash": null,
+      "claims": [
+        {
+          "caveats": [
+            "This does not establish security, compliance, production readiness, deployment readiness, or customer validation."
+          ],
+          "claim_id": "claim-hold-001",
+          "claim_kind": "DESCRIPTIVE",
+          "claim_tag": "PROTOTYPE_BEHAVIOR",
+          "evidence_refs": [
+            "evidence-hold-001"
+          ],
+          "statement": "This fixed fixture declares refreshable evidence that is temporarily unavailable."
+        }
+      ],
+      "content": "# Governed hold fixture\n\nThis fixed fixture declares refreshable evidence that is temporarily unavailable.\n\nThis does not establish security, compliance, production readiness, deployment readiness, or customer validation.\n",
+      "content_encoding": "utf-8",
+      "destination_path": null,
+      "operation": "CREATE",
+      "path": "docs/public/governed-hold-result.md"
+    }
+  ],
+  "contract_version": "governed-repo.shared-change-envelope/v1",
+  "evaluation_as_of": "2026-07-29T12:05:00Z",
+  "evidence": [
+    {
+      "availability": "REFRESHABLE_UNAVAILABLE",
+      "evidence_class": "SOURCE_OBSERVATION",
+      "evidence_id": "evidence-hold-001",
+      "evidence_state": "SUPPORTED",
+      "source_ref": "fixture://hold/revision-1",
+      "summary": "A required refreshable evidence input is explicitly declared but temporarily unavailable."
+    }
+  ],
+  "evidence_requirements": [
+    "path jurisdiction evidence",
+    "claim-class evidence",
+    "canonical combined receipt"
+  ],
+  "fixture": {
+    "fixture_id": "modeled-authority-hold",
+    "fixture_version": "1.0.0",
+    "state": "MODELED_HOLD"
+  },
+  "policy_hashes": {
+    "cap_policy": "sha256:32537c05c37be5a419790b4576edb9901b3ae1418f5693c75c1a01c8ef86f6b3",
+    "claims_gate": "sha256:d7210ff1bd1244bff5620cded67e041105389089bb6e1184774204b583f33098",
+    "path_gate": "sha256:cc3e424331e5eff147dc5192ee97a2907533f953eb029c41fde5f8d569a0cfeb"
+  },
+  "policy_versions": {
+    "cap_policy": "governed-repo.cap-policy/v1.0.0",
+    "claims_gate": "governed-repo.claims-policy/v1.0.0",
+    "path_gate": "governed-repo.path-policy/v1.0.0"
+  },
+  "requested_at": "2026-07-29T12:00:00Z",
+  "repair_summary": null,
+  "revision": 1,
+  "source_basis": {
+    "basis_hash": "sha256:7b4acd7e049e6460494f5e8e5e87b27080c0b708ca10ba6058ea593d99f6bc48",
+    "basis_id": "neutral-fixture-repository-base"
+  },
+  "task": {
+    "summary": "Exercise a refreshable-evidence CAP HOLD as a first-class non-PASS decision.",
+    "task_id": "flagship-hold-task-001"
+  }
+}

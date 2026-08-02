@@ -1,0 +1,81 @@
+{
+  "actor": {
+    "actor_id": "ai-agent-demo",
+    "actor_type": "AI_AGENT"
+  },
+  "assumptions_to_validate": [
+    "The declared source basis is current for this evaluation.",
+    "The authority manifest applies to this actor, task, and requested action."
+  ],
+  "authority_ref": "authority-flagship-change-001",
+  "change_id": "flagship-change-001",
+  "changes": [
+    {
+      "after_content_hash": "sha256:e4aee51816a1f3bc64cc8b38697f5b7613f7ef297467bbfed94eb4eeff8bf1f9",
+      "before_content_hash": null,
+      "claims": [
+        {
+          "caveats": [
+            "This does not establish security, compliance, production readiness, deployment readiness, or customer validation."
+          ],
+          "claim_id": "claim-flagship-001",
+          "claim_kind": "DESCRIPTIVE",
+          "claim_tag": "PROTOTYPE_BEHAVIOR",
+          "evidence_refs": [
+            "evidence-source-002"
+          ],
+          "statement": "This file is a bounded product-local demonstration input evaluated under fixed declared contracts and policies."
+        }
+      ],
+      "content": "# Governed change fixture\n\nThis file is a bounded product-local demonstration input evaluated under fixed declared contracts and policies.\n\nThis does not establish security, compliance, production readiness, deployment readiness, or customer validation.\n",
+      "content_encoding": "utf-8",
+      "destination_path": null,
+      "operation": "CREATE",
+      "path": "docs/public/governed-change-result.md"
+    }
+  ],
+  "contract_version": "governed-repo.shared-change-envelope/v1",
+  "evaluation_as_of": "2026-07-29T12:05:00Z",
+  "evidence": [
+    {
+      "availability": "AVAILABLE",
+      "evidence_class": "SOURCE_OBSERVATION",
+      "evidence_id": "evidence-source-002",
+      "evidence_state": "SUPPORTED",
+      "source_ref": "fixture://repaired/revision-2",
+      "summary": "The proposed content and its bounded claim are present in this fixed fixture."
+    }
+  ],
+  "evidence_requirements": [
+    "path jurisdiction evidence",
+    "claim-class evidence",
+    "canonical combined receipt",
+    "prior BLOCK receipt id and hash"
+  ],
+  "fixture": {
+    "fixture_id": "neutral-block-repair-pass",
+    "fixture_version": "1.0.0",
+    "state": "BOUNDED_REPAIR"
+  },
+  "policy_hashes": {
+    "cap_policy": "sha256:32537c05c37be5a419790b4576edb9901b3ae1418f5693c75c1a01c8ef86f6b3",
+    "claims_gate": "sha256:d7210ff1bd1244bff5620cded67e041105389089bb6e1184774204b583f33098",
+    "path_gate": "sha256:cc3e424331e5eff147dc5192ee97a2907533f953eb029c41fde5f8d569a0cfeb"
+  },
+  "policy_versions": {
+    "cap_policy": "governed-repo.cap-policy/v1.0.0",
+    "claims_gate": "governed-repo.claims-policy/v1.0.0",
+    "path_gate": "governed-repo.path-policy/v1.0.0"
+  },
+  "requested_at": "2026-07-29T12:00:00Z",
+  "repair_summary": "Move the candidate snapshot into the authorized public-docs subtree and replace unsupported production/security claims with a bounded, evidenced prototype description.",
+  "revision": 2,
+  "source_basis": {
+    "basis_hash": "sha256:7b4acd7e049e6460494f5e8e5e87b27080c0b708ca10ba6058ea593d99f6bc48",
+    "basis_id": "neutral-fixture-repository-base"
+  },
+  "task": {
+    "summary": "Demonstrate one governed repository change through two heterogeneous gates.",
+    "task_id": "flagship-demo-task-001"
+  }
+}

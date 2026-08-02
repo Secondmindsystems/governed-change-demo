@@ -1,0 +1,78 @@
+{
+  "actor": {
+    "actor_id": "ai-agent-demo",
+    "actor_type": "AI_AGENT"
+  },
+  "assumptions_to_validate": [
+    "The declared source basis is current for this evaluation.",
+    "The authority manifest applies to this actor, task, and requested action."
+  ],
+  "authority_ref": "authority-flagship-change-001",
+  "change_id": "flagship-change-001",
+  "changes": [
+    {
+      "after_content_hash": "sha256:6cf94e297a7f8fa8bf28cba5eb31f94ed8835d2f5f79e1d687187262da0ecdcc",
+      "before_content_hash": "sha256:3875b81e90b636147cc5bce5f247b71ad25877c165f4773c98d5c2ad61db515e",
+      "claims": [
+        {
+          "caveats": [],
+          "claim_id": "claim-flagship-001",
+          "claim_kind": "OUTCOME_SUPPORTED",
+          "claim_tag": "PRODUCTION_READINESS",
+          "evidence_refs": [
+            "evidence-action-001"
+          ],
+          "statement": "This repository change is production-ready and secure for customer deployment."
+        }
+      ],
+      "content": "{\n  \"enabled\": true,\n  \"claim\": \"This repository change is production-ready and secure for customer deployment.\"\n}\n",
+      "content_encoding": "utf-8",
+      "destination_path": null,
+      "operation": "UPDATE",
+      "path": "config/production-mode.json"
+    }
+  ],
+  "contract_version": "governed-repo.shared-change-envelope/v1",
+  "evaluation_as_of": "2026-07-29T12:05:00Z",
+  "evidence": [
+    {
+      "availability": "AVAILABLE",
+      "evidence_class": "ACTION_EVENT",
+      "evidence_id": "evidence-action-001",
+      "evidence_state": "SUPPORTED",
+      "source_ref": "fixture://original/revision-1",
+      "summary": "The neutral fixture records that an AI proposed this repository change."
+    }
+  ],
+  "evidence_requirements": [
+    "path jurisdiction evidence",
+    "claim-class evidence",
+    "canonical combined receipt"
+  ],
+  "fixture": {
+    "fixture_id": "neutral-block-repair-pass",
+    "fixture_version": "1.0.0",
+    "state": "ORIGINAL_BLOCK"
+  },
+  "policy_hashes": {
+    "cap_policy": "sha256:32537c05c37be5a419790b4576edb9901b3ae1418f5693c75c1a01c8ef86f6b3",
+    "claims_gate": "sha256:d7210ff1bd1244bff5620cded67e041105389089bb6e1184774204b583f33098",
+    "path_gate": "sha256:cc3e424331e5eff147dc5192ee97a2907533f953eb029c41fde5f8d569a0cfeb"
+  },
+  "policy_versions": {
+    "cap_policy": "governed-repo.cap-policy/v1.0.0",
+    "claims_gate": "governed-repo.claims-policy/v1.0.0",
+    "path_gate": "governed-repo.path-policy/v1.0.0"
+  },
+  "requested_at": "2026-07-29T12:00:00Z",
+  "repair_summary": null,
+  "revision": 1,
+  "source_basis": {
+    "basis_hash": "sha256:7b4acd7e049e6460494f5e8e5e87b27080c0b708ca10ba6058ea593d99f6bc48",
+    "basis_id": "neutral-fixture-repository-base"
+  },
+  "task": {
+    "summary": "Demonstrate one governed repository change through two heterogeneous gates.",
+    "task_id": "flagship-demo-task-001"
+  }
+}

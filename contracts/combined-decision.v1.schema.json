@@ -1,0 +1,393 @@
+{
+  "$id": "https://schemas.example.org/governed-change-demo/combined-decision.v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "cap_decision_ref": {
+            "properties": {
+              "decision": {
+                "enum": [
+                  "BLOCK",
+                  "HOLD:CONTEXT_UPDATE_REQUIRED"
+                ]
+              }
+            },
+            "required": [
+              "decision"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "cap_decision_ref"
+        ]
+      },
+      "then": {
+        "properties": {
+          "domain_gates_executed": {
+            "const": false
+          },
+          "gate_result_refs": {
+            "items": {
+              "properties": {
+                "reason_codes": {
+                  "items": false,
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "prefixItems": [
+                    {
+                      "const": "CAP_NOT_PASSED"
+                    }
+                  ]
+                },
+                "status": {
+                  "const": "NOT_EVALUATED"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "cap_decision_ref": {
+            "properties": {
+              "decision": {
+                "const": "HOLD:CONTEXT_UPDATE_REQUIRED"
+              }
+            },
+            "required": [
+              "decision"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "cap_decision_ref"
+        ]
+      },
+      "then": {
+        "properties": {
+          "status": {
+            "const": "HOLD"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "cap_decision_ref": {
+            "properties": {
+              "decision": {
+                "const": "BLOCK"
+              }
+            },
+            "required": [
+              "decision"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "cap_decision_ref"
+        ]
+      },
+      "then": {
+        "properties": {
+          "status": {
+            "const": "BLOCK"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "cap_decision_ref": {
+            "properties": {
+              "decision": {
+                "const": "PASS"
+              }
+            },
+            "required": [
+              "decision"
+            ],
+            "type": "object"
+          },
+          "gate_result_refs": {
+            "contains": {
+              "properties": {
+                "status": {
+                  "const": "NOT_EVALUATED"
+                }
+              },
+              "required": [
+                "status"
+              ]
+            }
+          }
+        },
+        "required": [
+          "cap_decision_ref",
+          "gate_result_refs"
+        ]
+      },
+      "then": {
+        "properties": {
+          "status": {
+            "const": "BLOCK"
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "capReference": {
+      "additionalProperties": false,
+      "properties": {
+        "canonical_hash": {
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "cap_decision_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "decision": {
+          "enum": [
+            "PASS",
+            "BLOCK",
+            "HOLD:CONTEXT_UPDATE_REQUIRED"
+          ]
+        },
+        "domain_gates_may_run": {
+          "type": "boolean"
+        },
+        "execution_authority": {
+          "const": false
+        }
+      },
+      "required": [
+        "cap_decision_id",
+        "canonical_hash",
+        "decision",
+        "domain_gates_may_run",
+        "execution_authority"
+      ],
+      "type": "object"
+    },
+    "gateReference": {
+      "additionalProperties": false,
+      "properties": {
+        "gate_id": {
+          "enum": [
+            "claims_gate",
+            "path_gate"
+          ]
+        },
+        "reason_codes": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "result_hash": {
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "result_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "PASS",
+            "BLOCK",
+            "HOLD",
+            "NOT_EVALUATED"
+          ]
+        }
+      },
+      "required": [
+        "gate_id",
+        "result_id",
+        "result_hash",
+        "status",
+        "reason_codes",
+        "required"
+      ],
+      "type": "object"
+    }
+  },
+  "properties": {
+    "authority_status": {
+      "enum": [
+        "VALID",
+        "MISSING",
+        "INVALID",
+        "STALE",
+        "REVOKED",
+        "UNRESOLVED"
+      ]
+    },
+    "cap_decision_ref": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/capReference"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "cap_input_status": {
+      "enum": [
+        "VALID",
+        "INVALID",
+        "MISSING"
+      ]
+    },
+    "change_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "contract_version": {
+      "const": "governed-repo.combined-decision/v1"
+    },
+    "decision_hash": {
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "decision_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "domain_gates_executed": {
+      "type": "boolean"
+    },
+    "gate_result_refs": {
+      "allOf": [
+        {
+          "contains": {
+            "properties": {
+              "gate_id": {
+                "const": "claims_gate"
+              }
+            },
+            "required": [
+              "gate_id"
+            ]
+          },
+          "maxContains": 1,
+          "minContains": 1
+        },
+        {
+          "contains": {
+            "properties": {
+              "gate_id": {
+                "const": "path_gate"
+              }
+            },
+            "required": [
+              "gate_id"
+            ]
+          },
+          "maxContains": 1,
+          "minContains": 1
+        }
+      ],
+      "items": {
+        "$ref": "#/definitions/gateReference"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    },
+    "input_status": {
+      "enum": [
+        "VALID",
+        "INVALID"
+      ]
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "logic_version": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "next_lawful_move": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "reason_codes": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "required_gates": {
+      "items": false,
+      "maxItems": 2,
+      "minItems": 2,
+      "prefixItems": [
+        {
+          "const": "claims_gate"
+        },
+        {
+          "const": "path_gate"
+        }
+      ],
+      "type": "array"
+    },
+    "revision": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "status": {
+      "enum": [
+        "PASS",
+        "BLOCK",
+        "HOLD"
+      ]
+    }
+  },
+  "required": [
+    "contract_version",
+    "decision_id",
+    "decision_hash",
+    "logic_version",
+    "change_id",
+    "revision",
+    "input_status",
+    "authority_status",
+    "cap_input_status",
+    "cap_decision_ref",
+    "domain_gates_executed",
+    "required_gates",
+    "gate_result_refs",
+    "status",
+    "reason_codes",
+    "limitations",
+    "next_lawful_move"
+  ],
+  "title": "Combined Decision v1",
+  "type": "object"
+}

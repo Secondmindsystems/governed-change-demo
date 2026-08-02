@@ -1,0 +1,41 @@
+{
+  "check_order": [
+    "AUTHORITY_REVOCATION",
+    "AUTHORITY_SCOPE",
+    "AUTHORITY_TIME",
+    "EVIDENCE_PRESENCE",
+    "GATE_APPLICABILITY",
+    "NO_TOUCH",
+    "POLICY_INTEGRITY",
+    "SOURCE_BASIS",
+    "VERSION_RECOGNITION"
+  ],
+  "contract_version": "governed-repo.cap-policy/v1",
+  "decision_precedence": [
+    "BLOCK",
+    "HOLD:CONTEXT_UPDATE_REQUIRED",
+    "PASS"
+  ],
+  "effective_from": "2026-01-01T00:00:00Z",
+  "expires_at": "2027-01-01T00:00:00Z",
+  "mechanical_rules": {
+    "authority_revocation_unknown": "BLOCK",
+    "authority_revoked": "BLOCK",
+    "authority_scope_failure": "BLOCK",
+    "authority_time_failure": "BLOCK",
+    "gate_set_underdeclared": "BLOCK",
+    "missing_evidence": "BLOCK",
+    "no_touch_violation": "BLOCK",
+    "policy_integrity_failure": "BLOCK",
+    "refreshable_evidence_unavailable": "HOLD:CONTEXT_UPDATE_REQUIRED",
+    "source_basis_mismatch": "HOLD:CONTEXT_UPDATE_REQUIRED",
+    "unknown_policy_version": "BLOCK"
+  },
+  "policy_hash": "sha256:32537c05c37be5a419790b4576edb9901b3ae1418f5693c75c1a01c8ef86f6b3",
+  "policy_id": "flagship-public-cap-policy",
+  "policy_version": "governed-repo.cap-policy/v1.0.0",
+  "required_domain_gates": [
+    "claims_gate",
+    "path_gate"
+  ]
+}

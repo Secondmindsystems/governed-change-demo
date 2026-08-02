@@ -1,0 +1,50 @@
+{
+  "name": "Governed Change Flagship Validation",
+  "on": {
+    "pull_request": {},
+    "push": {},
+    "workflow_dispatch": {}
+  },
+  "permissions": {
+    "contents": "read"
+  },
+  "jobs": {
+    "validate": {
+      "runs-on": "ubuntu-latest",
+      "timeout-minutes": 5,
+      "steps": [
+        {
+          "name": "Checkout without persisted credentials",
+          "uses": "actions/checkout@v4",
+          "with": {
+            "persist-credentials": false
+          }
+        },
+        {
+          "name": "Validate six contracts and fixed policies",
+          "run": "python3 -B -m governed_change_demo validate --fixture blocked --cap-policy policies/cap-policy.v1.json"
+        },
+        {
+          "name": "Validate CAP BLOCK fixture",
+          "run": "python3 -B -m governed_change_demo validate --fixture cap-block --cap-policy policies/cap-policy.v1.json"
+        },
+        {
+          "name": "Validate context-update fixture",
+          "run": "python3 -B -m governed_change_demo validate --fixture context-update --cap-policy policies/cap-policy.v1.json"
+        },
+        {
+          "name": "Run BLOCK to repair to PASS demo",
+          "run": "python3 -B -m governed_change_demo demo --cap-policy policies/cap-policy.v1.json"
+        },
+        {
+          "name": "Replay repaired fixture",
+          "run": "python3 -B -m governed_change_demo replay --fixture repaired --cap-policy policies/cap-policy.v1.json --runs 3"
+        },
+        {
+          "name": "Run product-local tests",
+          "run": "python3 -B -m unittest discover -s tests -v"
+        }
+      ]
+    }
+  }
+}
