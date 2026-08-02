@@ -19,7 +19,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from governed_change_demo.orchestrator import evaluate_bundle  # noqa: E402
-from tests.helpers import evaluation_bundle  # noqa: E402
+from tests.helpers import evaluation_bundle, pass_bundle  # noqa: E402
 
 
 CLAIM_CEILING = (
@@ -48,9 +48,10 @@ def summarize(values: list[float]) -> dict[str, float | int]:
 
 def timed_evaluation(fixture: str) -> float:
     started = time.perf_counter_ns()
-    outcome = evaluate_bundle(*evaluation_bundle(fixture))
+    inputs = pass_bundle() if fixture == "pass" else evaluation_bundle(fixture)
+    outcome = evaluate_bundle(*inputs)
     elapsed = (time.perf_counter_ns() - started) / 1_000_000
-    expected = "PASS" if fixture == "repaired" else "BLOCK"
+    expected = "PASS" if fixture == "pass" else "BLOCK"
     if outcome.status != expected:
         raise RuntimeError(f"unexpected {fixture} status: {outcome.status}")
     return elapsed
@@ -78,7 +79,7 @@ def timed_demo() -> float:
             text=True,
         )
         elapsed = (time.perf_counter_ns() - started) / 1_000_000
-        if completed.returncode != 0 or "demo: PASS" not in completed.stdout:
+        if completed.returncode != 0 or '"demo": "PASS"' not in completed.stdout:
             raise RuntimeError(
                 f"demo failed: exit={completed.returncode} stderr={completed.stderr}"
             )
@@ -104,7 +105,7 @@ def main() -> int:
 
     for _ in range(args.warmups):
         timed_evaluation("blocked")
-        timed_evaluation("repaired")
+        timed_evaluation("pass")
         timed_demo()
 
     report = {
@@ -132,8 +133,8 @@ def main() -> int:
             "blocked_evaluation": summarize(
                 [timed_evaluation("blocked") for _ in range(args.evaluation_runs)]
             ),
-            "repaired_evaluation": summarize(
-                [timed_evaluation("repaired") for _ in range(args.evaluation_runs)]
+            "pass_evaluation": summarize(
+                [timed_evaluation("pass") for _ in range(args.evaluation_runs)]
             ),
             "integrated_demo_process": summarize(
                 [timed_demo() for _ in range(args.demo_runs)]
