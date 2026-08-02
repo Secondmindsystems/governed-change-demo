@@ -64,6 +64,12 @@ class ExportTests(unittest.TestCase):
         self.assertIn("test_02_stale_basis_is_cap_and_combined_hold", runner)
         self.assertIn("test_15_gate_order_is_materially_invariant_after_cap_pass", runner)
 
+    def test_local_timing_tool_preserves_exact_claim_ceiling(self) -> None:
+        tool = (ROOT / "tools" / "benchmark_local.py").read_text(encoding="utf-8")
+        self.assertIn("time.perf_counter_ns", tool)
+        self.assertIn("not production benchmarks", tool)
+        self.assertIn("not production benchmarks, comparative performance claims, scalability", tool)
+
     def test_required_authorship_disclosure_is_preserved(self) -> None:
         text = (ROOT / "docs" / "AUTHORSHIP_AND_AI_DISCLOSURE.md").read_text(
             encoding="utf-8"
