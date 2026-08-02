@@ -12,7 +12,7 @@ These results describe fixed prototype inputs only.
 | Integrated demo | revision 1 `BLOCK`; revision 2 `PASS` |
 | Repaired replay | five runs; byte-identical; 25,194 canonical bytes |
 | Reversed gate order | same decision, receipt identity, and replay identity |
-| Test suite | 73 run; 73 passed; zero failures, errors, or skips |
+| Test suite | 76 run; 76 passed; zero failures, errors, or skips |
 | Standalone reproduction | validation, demo, replay, workflow parse, and all tests passed in an isolated copy |
 
 No network, package installation, provider, credential, private repository, or

@@ -93,7 +93,7 @@ sha256:10a2135e3e8127ab8ed9d17759d8507e424d0aba2ad73afaa183bf9cf00778f4
 python3 -B -m unittest discover -s tests -v
 ```
 
-Expected: 73 tests pass.
+Expected: 76 tests pass.
 
 ## Close
 
