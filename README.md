@@ -55,6 +55,9 @@ Expected replay identity:
 sha256:10a2135e3e8127ab8ed9d17759d8507e424d0aba2ad73afaa183bf9cf00778f4
 ```
 
+If you were not involved in building or reviewing this demo, you can
+[return an independent PASS, FAIL, or CONFUSED report](https://github.com/Secondmindsystems/governed-change-demo/issues/1).
+
 Expected canonical replay size: `25,194 bytes`.
 
 The integrated demo should also report:
