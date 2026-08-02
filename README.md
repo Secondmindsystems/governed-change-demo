@@ -107,6 +107,7 @@ They share a result contract but retain different policy logic and evidence.
 - [Reproduction](docs/REPRODUCTION.md)
 - [Outsider reproduction](docs/OUTSIDER_REPRODUCTION.md)
 - [Adversarial test pack](docs/ADVERSARIAL_TEST_PACK.md)
+- [Local prototype timings](docs/LOCAL_PROTOTYPE_TIMINGS.md)
 - [Public validation campaign state](docs/PUBLIC_VALIDATION_CAMPAIGN_STATE.md)
 - [Verified metrics](docs/VERIFIED_METRICS.md)
 - [Limitations](docs/LIMITATIONS.md)

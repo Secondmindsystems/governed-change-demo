@@ -22,6 +22,7 @@ class ExportTests(unittest.TestCase):
             "docs/REPRODUCTION.md",
             "docs/OUTSIDER_REPRODUCTION.md",
             "docs/ADVERSARIAL_TEST_PACK.md",
+            "docs/LOCAL_PROTOTYPE_TIMINGS.md",
             "docs/PUBLIC_VALIDATION_CAMPAIGN_STATE.md",
             "docs/AUTHORSHIP_AND_AI_DISCLOSURE.md",
             "docs/VERIFIED_METRICS.md",

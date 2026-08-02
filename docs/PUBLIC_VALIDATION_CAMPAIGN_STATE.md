@@ -13,7 +13,7 @@ timing evidence, and a later evidence-backed case study.
 | Company front door | Public successor live | fresh public clone and exact commit check |
 | Reproduction packet | Local candidate | exact commands, identities, and structured issue form |
 | Adversarial pressure pack | Local candidate | named stdlib test runner and pressure map |
-| Local timing evidence | In progress | bounded report with environment and claim ceiling |
+| Local timing evidence | Local candidate complete | bounded report with exact commit, environment, method, and claim ceiling |
 | Fourth portfolio case | Pending local skeleton | cannot claim outsider evidence before an identifiable return |
 
 ## Claim discipline
