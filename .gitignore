@@ -1,5 +1,6 @@
 __pycache__/
 *.py[cod]
 .pytest_cache/
-evidence/
+evidence/*
+!evidence/public-claims.v1.json
 runs/

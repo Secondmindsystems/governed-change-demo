@@ -43,6 +43,10 @@
         {
           "name": "Run product-local tests",
           "run": "python3 -B -m unittest discover -s tests -v"
+        },
+        {
+          "name": "Verify public claims manifest",
+          "run": "python3 -B tools/verify_public_claims.py"
         }
       ]
     }
