@@ -42,6 +42,8 @@ authority, or predetermine either domain gate.
 Requirements: Python 3.11 or newer. No installation, network, credentials,
 provider, repository hook, or external service is required.
 
+76 automated tests pass in the current published validation suite.
+
 ```bash
 python3 -B -m governed_change_demo validate --fixture blocked --cap-policy policies/cap-policy.v1.json
 python3 -B -m governed_change_demo demo --cap-policy policies/cap-policy.v1.json --output-dir evidence/demo-run
