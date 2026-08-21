@@ -1,25 +1,102 @@
 # One Change, Two Gates, One Receipt
 
-A deterministic, standalone demonstration of governed repository-change
-evaluation:
+**Generation proposes a change. Acceptance requires a separate decision.**
+
+A proposed repository change can look technically plausible and still exceed its declared authority, touch repository paths outside its permitted scope, or make claims that the declared evidence does not support.
+
+Those are separate conditions to evaluate.
+
+This repository is a deterministic, standalone demonstration of evaluating those conditions for a **declared candidate-change snapshot**.
+
+In this demo, an **acceptance decision** has a narrow meaning: it is the demo's `Combined Decision` for that declared snapshot under fixed authority, context, path, claim, evidence, policy, evaluator, and evaluation-time inputs.
+
+The possible `Combined Decision` outcomes are:
+
+- `BLOCK`
+- `HOLD`
+- `PASS`
+
+These are **evaluation outcomes only**.
+
+They do not grant permission to execute, merge, deploy, modify a live repository, or perform any other consequential action.
+
+The evaluation path is:
 
 ```text
 candidate-change snapshot
--> Authority Manifest
--> Context and Authority Precheck (CAP)
--> Path Gate + Claims Gate
--> Combined Decision
--> hash-linked Governed Receipt
+  -> Authority Manifest
+  -> Context and Authority Precheck (CAP)
+  -> Path Gate + Claims Gate
+  -> Combined Decision
+  -> hash-linked Governed Receipt
 ```
 
-The original revision is blocked for two independent reasons. A bounded repair
-increments the revision, re-enters through CAP, reruns both gates, and passes.
-The new receipt preserves the prior decision by receipt ID and full SHA-256
-hash.
+The flagship episode makes the distinction concrete.
 
-If you want the shorter evidence-led overview before running the code, start
-with the
-[Governed AI Systems Portfolio](https://github.com/Secondmindsystems/governed-ai-systems-portfolio).
+For the original revision, CAP returns `PASS`. That means the declared snapshot is admissible for evaluation by the required domain gates.
+
+CAP does **not** certify that the declared authority is substantively correct, approve the proposed change, or grant execution permission.
+
+The two domain gates then evaluate different conditions:
+
+- the **Path Gate** returns `BLOCK` because one proposed operation exceeds the declared path authority;
+- the **Claims Gate** returns `BLOCK` because one claim exceeds the support provided by the declared evidence.
+
+The resulting `Combined Decision` is therefore `BLOCK`.
+
+A bounded repair creates a **new revision**.
+
+That repaired revision does not resume after the gates that previously failed. It re-enters the complete evaluation path through CAP, reruns both domain gates, and receives a new `Combined Decision` of `PASS`.
+
+The new receipt preserves the earlier blocked decision by both receipt ID and full SHA-256 hash.
+
+> **A plausible change can still fail acceptance. A later `PASS` does not erase the earlier `BLOCK` — it records a new decision for a new revision and preserves the prior decision in the evidence chain.**
+
+That later `PASS` has a deliberately narrow meaning.
+
+It establishes that the **repaired declared snapshot passed this deterministic evaluation under the demo's fixed inputs, policies, and evaluator**.
+
+It does **not** establish:
+
+- execution authority;
+- live-worktree enforcement;
+- permission to merge or deploy;
+- production readiness;
+- deployment readiness;
+- security or compliance certification;
+- customer validation;
+- market validation; or
+- independent third-party reproduction or validation.
+
+The published demo has been reproduced from a clean clone by the maintainer. **Independent third-party reproduction remains pending.**
+
+A governed receipt records the evaluation outcome and the evidence bound to that outcome.
+
+It is evidence of **what this evaluation decided for the declared inputs**.
+
+> **The existence of a receipt does not, by itself, establish that an underlying claim referenced by the evaluation is true.**
+
+The exact demonstrated results, evidence classes, and limitations are maintained in **Verified Metrics** and **Claim Boundaries** below.
+
+Numeric and receipt claims are additionally bound to the machine-readable:
+
+`evidence/public-claims.v1.json`
+
+## Try it yourself
+
+Use the existing **Five-minute run** procedure below to execute the published cases and verification path.
+
+If you were not involved in building or reviewing this demo, you can also return an outsider-review result of:
+
+- `PASS`
+- `FAIL`
+- `CONFUSED`
+
+Those labels describe **your reproduction and review experience**.
+
+They are separate from the demo's `BLOCK`, `HOLD`, and `PASS` `Combined Decision` outcomes and do not change the demo's evidence state or evaluation results.
+
+If you want a shorter, evidence-led overview before running the code, start with the [Governed AI Systems Portfolio](https://github.com/Secondmindsystems/governed-ai-systems-portfolio).
 
 ## What CAP means here
 
