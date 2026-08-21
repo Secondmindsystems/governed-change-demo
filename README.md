@@ -98,6 +98,14 @@ They are separate from the demo's `BLOCK`, `HOLD`, and `PASS` `Combined Decision
 
 If you want a shorter, evidence-led overview before running the code, start with the [Governed AI Systems Portfolio](https://github.com/Secondmindsystems/governed-ai-systems-portfolio).
 
+## About Second Mind Systems
+
+This demo is one public slice of our work on AI agent systems, workflow diagnosis, authority, execution boundaries, and verification.
+
+If you're building a difficult AI workflow, working on complementary agent infrastructure, or interested in collaborating, reach us at [secondmindsystems@gmail.com](mailto:secondmindsystems@gmail.com).
+
+Broader public work: [Governed AI Systems Portfolio](https://github.com/Secondmindsystems/governed-ai-systems-portfolio)
+
 ## What CAP means here
 
 **Context and Authority Precheck (CAP)** is a deterministic precheck performed
