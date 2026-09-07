@@ -1,15 +1,13 @@
 # Five-Minute Demo
 
-## 0:00 — State the promise
+## 0:00 — Follow one change through the checks
 
-> One logical change. One Context and Authority Precheck. Two heterogeneous
-> repository policy gates. One consolidated receipt per revision. The original
-> blocks, the bounded repair re-enters through CAP and passes, and linked
-> hashes preserve why.
+The original snapshot targets a disallowed path and makes a claim its evidence
+does not support. Run it, inspect both blocked checks, then follow the repair
+through a fresh evaluation and linked receipt.
 
-CAP determines whether a proposal is admissible for evaluation. It does not
-execute the proposal, create authority, certify the authority issuer, or
-replace either gate.
+The precheck, CAP, determines whether the inputs are ready for evaluation.
+The path and claim gates then evaluate the proposed change.
 
 ## 0:30 — Validate the six contracts
 
@@ -97,6 +95,7 @@ Expected: 76 tests pass.
 
 ## Close
 
-This is deterministic demonstration evidence for fixed declared inputs. It is
-not production, deployment, security, compliance, customer, market, or
-external-validation evidence.
+You have now followed the fixed example from its original failure through
+repair and replay. Inspect the generated receipts to see which inputs and
+checks produced each decision. See [the evidence scope](CLAIM_BOUNDARIES.md)
+for the exact meaning of those results.
